@@ -34,7 +34,6 @@ const PropertyAddForm = () => {
     },
     images: [],
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name.includes(".")) {
@@ -55,21 +54,24 @@ const PropertyAddForm = () => {
     }
   };
   const handleAmenitiesChange = (e) => {
-    // console.log(e.target)
+    console.log(e.target);
     const { value, checked } = e.target;
     const updatedAmenities = [...fields.amenities];
     if (checked) {
       updatedAmenities.push(value);
     } else {
       const index = updatedAmenities.indexOf(value);
+      console.log(index);
+      console.log(e.target);
       if (index !== -1) {
-        updatedAmenites.splice(index, 1);
+        updatedAmenities.splice(index, 1);
       }
     }
     setFields((prevFields) => ({
       ...prevFields,
       amenities: updatedAmenities,
     }));
+    console.log(updatedAmenities, fields.amenities);
   };
   const handleImageChange = (e) => {
     const { files } = e.target;
@@ -84,7 +86,7 @@ const PropertyAddForm = () => {
     }));
   };
   return (
-    <form>
+    <form action="/api/properties" method="POST" encType="multipart/form-data">
       <h2 className="text-3xl text-center font-semibold mb-6">Add Property</h2>
 
       <div className="mb-4">
@@ -478,7 +480,7 @@ const PropertyAddForm = () => {
         <input
           type="text"
           id="seller_name"
-          name="seller_info.name."
+          name="seller_info.name"
           className="border rounded w-full py-2 px-3"
           placeholder="Name"
           value={fields.seller_info.name}
